@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_login/bg-shape.dart';
 import 'package:flutter_login/widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.deepOrange),
       home: const HomePage(),
@@ -40,17 +42,37 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     UserModel? user = _currentUser;
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Home Page"),
-        ),
-        body: _buildWidget());
+      body: Stack(
+        children: [
+          ClipPath(
+              clipper: MyClipper(),
+              child: Container(
+                // ignore: prefer_const_constructors
+                decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                    // ignore: prefer_const_constructors
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        colors: [
+                          const Color(0xffF29393),
+                          const Color(0xffFB6E6E),
+                          const Color(0xffFF0000),
+                        ])),
+                child: null,
+              )),
+          _buildWidget()
+        ],
+      ),
+    );
   }
 
   Widget _buildWidget() {
     UserModel? user = _currentUser;
     if (user != null) {
       return Padding(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         child: Column(
           children: [
             ListTile(
@@ -61,18 +83,38 @@ class _HomePageState extends State<HomePage> {
               title: Text(user.name!),
               subtitle: Text(user.email!),
             ),
-            ElevatedButton(onPressed: signoOut, child: Text("Out"))
+            ElevatedButton(onPressed: signoOut, child: const Text("Out"))
           ],
         ),
       );
     } else {
       return Padding(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomWidgets.socialButtonRect('Login with Facebook', facebookColor,
-                FontAwesomeIcons.facebookF,
-                onTap: signIn),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20)),
+                      color: Colors.white,
+                      border: Border.all(width: 3, color: Colors.grey)),
+                  height: 450,
+                  width: double.infinity,
+                  child: const Text("asdkas"),
+                ),
+              ),
+            ),
+            // CustomWidgets.socialButtonRect('Login with Facebook', facebookColor,
+            //     FontAwesomeIcons.facebookF,
+            //     onTap: signIn),
           ],
         ),
       );
@@ -89,6 +131,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {});
     }
   }
+
   Future<void> signoOut() async {
     await FacebookAuth.i.logOut();
     _currentUser = null;
