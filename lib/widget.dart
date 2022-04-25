@@ -8,22 +8,26 @@ class CustomWidgets {
       },
       child: Container(
         height: 50,
-        margin: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
-            color: color, borderRadius: BorderRadius.all(Radius.circular(10))),
+            color: Colors.grey.shade300, borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Icon(
-              icon,
-              color: Colors.white,
+            Padding(
+              padding: const EdgeInsets.only(left: 20),
+              child: Icon(
+                icon,
+                color: color,
+                size: 17,
+              ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 20),
+              margin: EdgeInsets.only(left: 20,right: 20),
               child: Text(title,
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
+                      color: Colors.black,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400)),
             ),
           ],

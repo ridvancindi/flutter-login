@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_login/bg-shape.dart';
@@ -96,25 +98,204 @@ class _HomePageState extends State<HomePage> {
           children: [
             Center(
               child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Stack(children: [
+                  Container(
+                      margin: const EdgeInsets.only(top: 35),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20)),
+                        color: Colors.white,
+                        border:
+                            Border.all(width: 2, color: Colors.grey.shade500),
+                        // ignore: prefer_const_literals_to_create_immutables
+                        boxShadow: [
+                          const BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 4,
+                            offset: Offset(0, 4), // Shadow position
+                          ),
+                        ],
+                      ),
+                      height: 450,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 55),
+                        child: Column(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              // ignore: prefer_const_constructors
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 5, top: 10),
+                                child: const TextField(
+                                  // ignore: unnecessary_const
+                                  style: TextStyle(fontSize: 14),
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                      ),
+                                      labelText: 'Email',
+                                      prefixIcon: Icon(
+                                        Icons.person_outline,
+                                        size: 22,
+                                        color: Color(0xffFFC400),
+                                      )),
+                                  autofocus: false,
+                                ),
+                              ),
+                              // ignore: prefer_const_constructors
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, bottom: 10, top: 5),
+                                child: const TextField(
+                                  style: TextStyle(fontSize: 14),
+                                  // ignore: unnecessary_const
+                                  decoration: const InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                      ),
+                                      labelText: 'Password',
+                                      prefixIcon: Icon(
+                                        Icons.lock_outline,
+                                        size: 20,
+                                        color: Color(0xffFFC400),
+                                      )),
+                                  autofocus: false,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20.0,
+                                    right: 20.0,
+                                    top: 10,
+                                    bottom: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: const Text(
+                                        "I forgot my password",
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topRight,
+                                      // ignore: prefer_const_constructors
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8.0)),
+                                          // ignore: prefer_const_constructors
+                                          gradient: LinearGradient(
+                                              // ignore: prefer_const_literals_to_create_immutables
+                                              colors: [
+                                                const Color(0xffF29393),
+                                                const Color(0xffFF0000),
+                                              ])),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          print("deneme");
+                                        },
+                                        child: const Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 20,
+                                              right: 20,
+                                              top: 8,
+                                              bottom: 8),
+                                          child: Text(
+                                            "Login",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Row(
+                                  // ignore: prefer_const_literals_to_create_immutables
+                                  children: [
+                                    const Expanded(
+                                        child:
+                                            Divider(height: 2, thickness: 2)),
+                                    const Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 5, right: 5),
+                                      child: const Text("Quick Connect"),
+                                    ),
+                                    const Expanded(
+                                        child: const Divider(
+                                            height: 2, thickness: 2)),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CustomWidgets.socialButtonRect(
+                                        'Facebook',
+                                        facebookColor,
+                                        FontAwesomeIcons.facebookF,
+                                        onTap: () {}),
+                                    CustomWidgets.socialButtonRect(
+                                        'Google',
+                                        googleColor,
+                                        FontAwesomeIcons.googlePlusG,
+                                        onTap: () {
+                                    }),
+                                  ],
+                                ),
+                              ),
+                            ]),
+                      )),
+                  Container(
+                    // ignore: prefer_const_constructors
+                    decoration: BoxDecoration(
                       color: Colors.white,
-                      border: Border.all(width: 3, color: Colors.grey)),
-                  height: 450,
-                  width: double.infinity,
-                  child: const Text("asdkas"),
-                ),
+                      shape: BoxShape.circle,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      boxShadow: [
+                        const BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 4,
+                          offset: Offset(0, 4), // Shadow position
+                        ),
+                      ],
+                    ),
+                    child: const Align(
+                        alignment: Alignment.topCenter,
+                        child: SizedBox(
+                          child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.person_rounded,
+                                color: Colors.black,
+                                size: 35,
+                              ),
+                              radius: 38.0,
+                              backgroundImage: null),
+                        )),
+                  ),
+                ]),
               ),
             ),
-            // CustomWidgets.socialButtonRect('Login with Facebook', facebookColor,
-            //     FontAwesomeIcons.facebookF,
-            //     onTap: signIn),
           ],
         ),
       );
