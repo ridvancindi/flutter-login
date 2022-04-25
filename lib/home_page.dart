@@ -13,8 +13,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("data"),
-        actions: [IconButton(onPressed: _out, icon: Icon(Icons.fork_left))],
+        title: Text("Logged"),
+        actions: [IconButton(onPressed: _out, icon: Icon(Icons.exit_to_app))],
       ),
     );
   }

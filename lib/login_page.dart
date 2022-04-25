@@ -5,6 +5,7 @@ import 'package:flutter_login/bg-shape.dart';
 import 'package:flutter_login/main.dart';
 import 'package:flutter_login/widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     auth = FirebaseAuth.instance;
   }
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -127,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 10, right: 10, bottom: 5, top: 10),
-                                child:  TextFormField(
+                                child: TextFormField(
                                   controller: _email,
                                   // ignore: unnecessary_const
                                   style: TextStyle(fontSize: 14),
@@ -193,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     ),
                                     GestureDetector(
-                                      onTap: _test,
+                                      onTap: _login,
                                       child: Container(
                                         alignment: Alignment.topRight,
                                         // ignore: prefer_const_constructors
@@ -255,12 +257,12 @@ class _LoginPageState extends State<LoginPage> {
                                         'Facebook',
                                         facebookColor,
                                         FontAwesomeIcons.facebookF,
-                                        onTap: () {}),
+                                        onTap: facebookLogin),
                                     CustomWidgets.socialButtonRect(
                                         'Google',
                                         googleColor,
                                         FontAwesomeIcons.googlePlusG,
-                                        onTap: () {}),
+                                        onTap: googleLogin),
                                   ],
                                 ),
                               ),
@@ -321,12 +323,58 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {});
   }
 
-  void _test() async {
+  void snackBar(String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+    );
+
+    // Find the ScaffoldMessenger in the widget tree
+    // and use it to show a SnackBar.
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _login() async {
     try {
-      var user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: "ridvancindi@gmail.com",password: "123456");
+      var user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _email.text, password: _password.text);
       print(user.user!.email.toString());
-    } catch (e) {
-      debugPrint(e.toString());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        snackBar("No user found for that email.");
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        snackBar('Wrong password provided for that user.');
+        print('Wrong password provided for that user.');
+      }
     }
+  }
+
+  Future<void> googleLogin() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<void> facebookLogin() async {
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+
+    // Once signed in, return the UserCredential
+    await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 }
