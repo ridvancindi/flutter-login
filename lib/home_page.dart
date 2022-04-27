@@ -1,14 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  User? user;
+  HomePage(this.user);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState(user);
 }
 
 class _HomePageState extends State<HomePage> {
+  User? user;
+  _HomePageState(this.user);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseFirestore.instance;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +26,14 @@ class _HomePageState extends State<HomePage> {
         title: Text("Logged"),
         actions: [IconButton(onPressed: _out, icon: Icon(Icons.exit_to_app))],
       ),
+      body: ElevatedButton(
+          onPressed: () async{
+            await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({
+              'uid':user!.uid,
+              'username': 'deneme'
+            });
+          },
+          child: Text(user!.uid.toString())),
     );
   }
 

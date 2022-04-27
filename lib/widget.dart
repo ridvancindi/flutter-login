@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomWidgets {
   static Widget socialButtonRect(title, color, icon, {Function? onTap}) {
+    Color facebookColor = const Color(0xff39579A);
+    Color googleColor = const Color(0xffDF4A32);
     return InkWell(
       onTap: () {
         onTap!();
@@ -10,7 +12,8 @@ class CustomWidgets {
         height: 50,
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: BoxDecoration(
-            color: Colors.grey.shade300, borderRadius: BorderRadius.all(Radius.circular(10))),
+            color: title == "Facebook" ? facebookColor : googleColor,
+            borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -18,15 +21,16 @@ class CustomWidgets {
               padding: const EdgeInsets.only(left: 20),
               child: Icon(
                 icon,
-                color: color,
+                color: Colors.white,
                 size: 17,
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 20,right: 20),
+              margin: EdgeInsets.only(
+                  left: title == "Facebook" ? 8 : 15, right: 20),
               child: Text(title,
                   style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 14,
                       fontWeight: FontWeight.w400)),
             ),

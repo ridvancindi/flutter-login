@@ -31,10 +31,9 @@ class _LeadingPageState extends State<LeadingPage> {
       if (_user == null) {
         return LoginPage();
       } else {
-        return HomePage();
+        return HomePage(_user);
       }
-    
-    return Container();
+
   }
 
 }

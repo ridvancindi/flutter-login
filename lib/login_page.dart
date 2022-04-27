@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_login/bg-shape.dart';
 import 'package:flutter_login/main.dart';
+import 'package:flutter_login/signup_page.dart';
 import 'package:flutter_login/widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -62,8 +63,37 @@ class _LoginPageState extends State<LoginPage> {
                         ])),
                 child: null,
               )),
+          Container(
+            alignment: Alignment.topCenter,
+            margin: EdgeInsets.only(top: 30),
+            child: const Image(
+                height: 150, image: AssetImage('assets/images/deneme.png')),
+          ),
           _buildWidget()
         ],
+      ),
+      bottomNavigationBar: Container(
+        height: 50,
+        decoration: const BoxDecoration(
+            // ignore: unnecessary_const
+            gradient: const LinearGradient(
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+          colors: [Color(0xffF29393), Color(0xffFF0000)],
+        )),
+        child: InkWell(
+            onTap: () => Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (BuildContext context) {
+                  return SignUpPage();
+                })),
+            child: const Center(
+                child: Text(
+              "Sign Up",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ))),
       ),
     );
   }
@@ -118,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                       ),
-                      height: 450,
+                      height: 400,
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.only(top: 55),
@@ -132,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: TextFormField(
                                   controller: _email,
                                   // ignore: unnecessary_const
-                                  style: TextStyle(fontSize: 14),
+                                  style: const TextStyle(fontSize: 14),
                                   decoration: const InputDecoration(
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
@@ -140,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                       labelText: 'Email',
                                       prefixIcon: Icon(
-                                        Icons.person_outline,
+                                        Icons.local_post_office_outlined,
                                         size: 22,
                                         color: Color(0xffFFC400),
                                       )),
@@ -153,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                                     left: 10, right: 10, bottom: 10, top: 5),
                                 child: TextFormField(
                                   controller: _password,
-                                  style: TextStyle(fontSize: 14),
+                                  style: const TextStyle(fontSize: 14),
                                   // ignore: unnecessary_const
                                   decoration: const InputDecoration(
                                       border: OutlineInputBorder(
@@ -173,22 +203,20 @@ class _LoginPageState extends State<LoginPage> {
                                 padding: const EdgeInsets.only(
                                     left: 20.0,
                                     right: 20.0,
-                                    top: 10,
+                                    top: 0,
                                     bottom: 10),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     GestureDetector(
-                                      onTap: () async {
-                                        await auth.signOut();
-                                      },
+                                      onTap: () async {},
                                       child: Container(
                                         alignment: Alignment.topLeft,
                                         child: const Text(
-                                          "I forgot my password",
+                                          "Forgot your password?",
                                           style: TextStyle(
-                                              color: Colors.red,
+                                              color: Colors.grey,
                                               fontSize: 14,
                                               fontWeight: FontWeight.w500),
                                         ),
