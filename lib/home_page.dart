@@ -28,10 +28,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ElevatedButton(
           onPressed: () async{
-            await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({
-              'uid':user!.uid,
-              'username': 'deneme'
-            });
+           
           },
           child: Text(user!.uid.toString())),
     );
